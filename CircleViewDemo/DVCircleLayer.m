@@ -42,9 +42,13 @@ inline CGFloat FitFloat(CGFloat f){
 }
 
 -(void)drawInContext:(CGContextRef)ctx {
-     CGContextSetLineWidth(ctx, 1.5);
-    CGContextSetRGBStrokeColor(ctx, 1, 1, 1, 0.25);
+     CGContextSetLineWidth(ctx, 1);
+    CGContextSetRGBStrokeColor(ctx, 1, 1, 1, 0.2);
     for (NSInteger i = 0; i  <6;  i ++) {
+        if (i == 5) {
+            CGContextSetRGBStrokeColor(ctx, 1, 1, 1, 0.1);
+        }
+        
         CGContextAddArc(ctx, self.frame.size.width*0.5 , self.frame.size.width *0.5, FitFloat(23)+ FitFloat(29)*i, 0, 2*M_PI, 0); //添加一个圆
         CGContextDrawPath(ctx, kCGPathStroke);
     }
@@ -67,8 +71,11 @@ inline CGFloat FitFloat(CGFloat f){
 -(void)hhhhhh { // 3S 一圈  3*5 x = 0.5
     _time  ++; // 60代表一秒   maxalpha sin(_time/60.0 12.00*CircleTime ) = circletime/6/2
     
-    _alpha = maxAlpha *fabs(sin( 12*_time*1.000/(CircleTime*60)*M_PI_2));
-    
+    _alpha =  fabs(sin( 12*_time*1.000/(CircleTime*60)*M_PI_2));
+    NSInteger num = (NSInteger)_time /600.000/(CircleTime/60.00); //600ms 0.01 *600 = 1ms
+    if (num == 5) {
+        _alpha = 0.5 *fabs(sin( 12*_time*1.000/(CircleTime*60)*M_PI_2));
+    }
     [self setNeedsDisplay];
  }
 
